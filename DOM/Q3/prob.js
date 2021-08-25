@@ -19,8 +19,35 @@ let data = {
       },
     },
   };
+
+  function recursionTree(elem, data){
+    let lstChild = null;
+    for(var el in data){
+      if(el !== {}){
+        elem.insertAdjacentHTML("beforeend", "<li>" + el + "</li>");
+        lstChild = container.lastChild;
+      }
+    }
+    return lstChild;
+  }
   
-  function createTree(container, data) { /* your code */ }
+  function createTree(container, data) { 
+    for(var elem in data){
+      if(elem !== {}){
+        container.insertAdjacentHTML("beforeend", "<li>" + elem + "</li>");
+        let lastElem = container.lastChild;
+        if(data[elem] !== {}){
+          lastElem.insertAdjacentHTML("beforeend", "<ul></ul>");
+          lastElem = lastElem.lastChild;
+          for(var i in data[elem])
+          {
+            lastElem.insertAdjacentHTML("beforeend", "<li>" + i + "</li>");
+          }
+        }
+
+      }
+    }
+  }
   
   let container = document.getElementById('container');
   createTree(container, data); // creates the tree in the container
