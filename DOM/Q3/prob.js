@@ -20,32 +20,16 @@ let data = {
     },
   };
 
-  function recursionTree(elem, data){
-    let lstChild = null;
-    for(var el in data){
-      if(el !== {}){
-        elem.insertAdjacentHTML("beforeend", "<li>" + el + "</li>");
-        lstChild = container.lastChild;
-      }
-    }
-    return lstChild;
-  }
   
   function createTree(container, data) { 
     for(var elem in data){
-      if(elem !== {}){
-        container.insertAdjacentHTML("beforeend", "<li>" + elem + "</li>");
+      if(Object.keys(data[elem]).length > 0){
+        container.insertAdjacentHTML("beforeend", "<li>" + elem + "</li><ul></ul>");
         let lastElem = container.lastChild;
-        if(data[elem] !== {}){
-          lastElem.insertAdjacentHTML("beforeend", "<ul></ul>");
-          lastElem = lastElem.lastChild;
-          for(var i in data[elem])
-          {
-            lastElem.insertAdjacentHTML("beforeend", "<li>" + i + "</li>");
-          }
-        }
-
+        createTree(lastElem, data[elem])
       }
+      else
+        container.insertAdjacentHTML("beforeend", "<li>" + elem + "</li>");
     }
   }
   
